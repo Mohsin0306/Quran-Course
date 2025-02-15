@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaBars, FaTimes, FaQuran, FaHome, FaBook, FaInfoCircle, FaPhone, FaGraduationCap } from 'react-icons/fa';
+import { FaBars, FaTimes, FaQuran, FaHome, FaBook, FaInfoCircle, FaPhone, FaGraduationCap, FaSkype } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -75,13 +75,16 @@ const Navbar = () => {
                   }`} />
                 </Link>
               ))}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-green-600 text-white px-6 py-2.5 rounded-full hover:bg-green-700 transition-colors font-medium shadow-md hover:shadow-lg"
+              {/* Skype Contact Button */}
+              <a
+                href="skype:live:.cid.xxxxx?chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-blue-500 hover:text-blue-600 transition-colors"
               >
-                Start Free Trial
-              </motion.button>
+                <FaSkype className="text-xl" />
+                <span className="font-medium">Skype Chat</span>
+              </a>
             </div>
 
             {/* Mobile menu button */}
@@ -151,15 +154,18 @@ const Navbar = () => {
                       </Link>
                     </motion.div>
                   ))}
-                  <div className="pt-6">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-700 transition-colors font-medium shadow-md hover:shadow-lg"
+                  {/* Skype Contact in Mobile Menu */}
+                  <motion.div whileHover={{ x: 10 }}>
+                    <a
+                      href="skype:live:.cid.xxxxx?chat"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-4 text-blue-500 hover:text-blue-600 transition-colors py-2"
                     >
-                      Start Free Trial
-                    </motion.button>
-                  </div>
+                      <FaSkype className="text-xl" />
+                      <span className="font-medium">Skype Chat</span>
+                    </a>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>

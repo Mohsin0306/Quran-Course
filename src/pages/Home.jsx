@@ -1,10 +1,16 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { FaQuran, FaBookOpen, FaLanguage, FaPray, FaUserGraduate, FaClock, FaGlobe, FaAward, FaArrowRight, FaBookReader, FaBrain, FaBook, FaMosque, FaPhoneAlt, FaStar, FaCheckCircle, FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaChevronRight, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaQuran, FaBookOpen, FaLanguage, FaPray, FaUserGraduate, FaClock, FaGlobe, FaAward, FaArrowRight, FaBookReader, FaBrain, FaBook, FaMosque, FaPhoneAlt, FaStar, FaCheckCircle, FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaChevronRight, FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaTimes, FaSkype } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { courses } from '../data/courses';
 
 const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isWhatsAppOpen, setIsWhatsAppOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [activePopup, setActivePopup] = useState(null);
+  const navigate = useNavigate();
 
   const backgroundSlides = [
     {
@@ -49,23 +55,130 @@ const Home = () => {
     return () => clearInterval(timer);
   }, [currentSlide, isTransitioning]);
 
-  const courses = [
-    { icon: <FaQuran size={40} />, title: "Norani Qaida", description: "Perfect for beginners starting their Quranic journey" },
-    { icon: <FaQuran size={40} />, title: "Quran Nazra Recitation", description: "Learn proper Quran recitation with tajweed" },
-    { icon: <FaBookOpen size={40} />, title: "Quran Memorization (Hifz)", description: "Memorize the Holy Quran with expert guidance" },
-    { icon: <FaBookOpen size={40} />, title: "Interpretation (Tafseer)", description: "Understand the deep meaning of Quranic verses" },
-    { icon: <FaPray size={40} />, title: "Islamic FIQH", description: "Learn Islamic jurisprudence and rulings" },
-    { icon: <FaPray size={40} />, title: "Prayers & Supplications", description: "Learn essential prayers and duas" },
-    { icon: <FaLanguage size={40} />, title: "Arabic Language", description: "Master the language of the Quran" },
-    { icon: <FaBookOpen size={40} />, title: "Other Islamic Knowledge", description: "Comprehensive Islamic studies" }
-  ];
-
   const features = [
     { icon: <FaUserGraduate />, title: "Expert Teachers", description: "Learn from qualified and experienced Islamic scholars" },
     { icon: <FaClock />, title: "Flexible Timing", description: "Choose your convenient time for classes" },
     { icon: <FaGlobe />, title: "Online Learning", description: "Study from anywhere in the world" },
     { icon: <FaAward />, title: "Certification", description: "Receive recognized certificates upon completion" }
   ];
+
+  const whatsappOptions = [
+    {
+      text: "Technical Support",
+      initialMessage: "Hi, I need technical support for my online classes.",
+      number: "923313269415"
+    },
+    {
+      text: "Course Information",
+      initialMessage: "Hi, I would like to get information about your courses.",
+      number: "923313269415"
+    },
+    {
+      text: "Free Trial Class",
+      initialMessage: "Hi, I'm interested in booking a free trial class.",
+      number: "923313269415"
+    }
+  ];
+
+  const socialOptions = [
+    {
+      id: 'whatsapp',
+      icon: <FaWhatsapp className="w-5 h-5" />,
+      color: 'bg-[#25D366] hover:bg-[#128C7E]',
+      shadowColor: 'shadow-[#25D366]/20',
+      textColor: 'text-[#25D366]',
+      title: 'WhatsApp Chat',
+      options: [
+        {
+          text: "Technical Support",
+          initialMessage: "Hi, I need technical support for my online classes.",
+          number: "923405052017"
+        },
+        {
+          text: "Course Information",
+          initialMessage: "Hi, I would like to get information about your courses.",
+          number: "923405052017"
+        },
+        {
+          text: "Free Trial Class",
+          initialMessage: "Hi, I'm interested in booking a free trial class.",
+          number: "923405052017"
+        }
+      ]
+    },
+    {
+      id: 'skype',
+      icon: <FaSkype className="w-5 h-5" />,
+      color: 'bg-[#00AFF0] hover:bg-[#0078A0]',
+      shadowColor: 'shadow-[#00AFF0]/20',
+      textColor: 'text-[#00AFF0]',
+      title: 'Skype Chat',
+      link: 'skype:live:.cid.xxxxx?chat'
+    },
+    {
+      id: 'facebook',
+      icon: <FaFacebook className="w-5 h-5" />,
+      color: 'bg-[#1877F2] hover:bg-[#0C4A9E]',
+      shadowColor: 'shadow-[#1877F2]/20',
+      textColor: 'text-[#1877F2]',
+      title: 'Facebook',
+      link: 'https://facebook.com/yourpage'
+    },
+    {
+      id: 'instagram',
+      icon: <FaInstagram className="w-5 h-5" />,
+      color: 'bg-gradient-to-tr from-[#FF7A00] via-[#E31C79] to-[#C13584] hover:from-[#E56D00] hover:via-[#C1175F] hover:to-[#A02D6E]',
+      shadowColor: 'shadow-[#E31C79]/20',
+      textColor: 'text-[#E31C79]',
+      title: 'Instagram',
+      link: 'https://www.instagram.com/mohsin__ashraf_?igsh=MWxwM2x0Z3c1dGw0OQ=='
+    }
+  ];
+
+  const handleViewAllCourses = () => {
+    // Navigate to courses page and force a reload
+    window.location.href = '/courses';
+    // Alternative approach:
+    // navigate('/courses');
+    // window.location.reload();
+  };
+
+  const courseImages = {
+    'Basic Quran Reading': [
+      "https://images.pexels.com/photos/6204081/pexels-photo-6204081.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/6204087/pexels-photo-6204087.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500?auto=compress&cs=tinysrgb&w=100"
+    ],
+    'Tajweed Course': [
+      "https://images.pexels.com/photos/7275385/pexels-photo-7275385.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/6204276/pexels-photo-6204276.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/6204956/pexels-photo-6204956.jpeg?auto=compress&cs=tinysrgb&w=100"
+    ],
+    'Hifz Program': [
+      "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/3777943/pexels-photo-3777943.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/4064826/pexels-photo-4064826.jpeg?auto=compress&cs=tinysrgb&w=100"
+    ],
+    'Arabic Language': [
+      "https://images.pexels.com/photos/3796217/pexels-photo-3796217.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/5212339/pexels-photo-5212339.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=100"
+    ],
+    'Islamic Studies': [
+      "https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100",
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"
+    ],
+    'Quran Translation': [
+      "https://images.pexels.com/photos/6204947/pexels-photo-6204947.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/6204948/pexels-photo-6204948.jpeg?auto=compress&cs=tinysrgb&w=100",
+      "https://images.pexels.com/photos/6204949/pexels-photo-6204949.jpeg?auto=compress&cs=tinysrgb&w=100"
+    ]
+  };
+
+  const getProfileImages = (courseTitle) => {
+    return courseImages[courseTitle] || courseImages['Basic Quran Reading'];
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -153,28 +266,28 @@ const Home = () => {
                   transition={{ delay: 0.7 }}
                   className="flex flex-row gap-3 justify-center md:justify-start pt-4"
                 >
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  <Link
+                    to="/courses"
                     className="group relative overflow-hidden bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-bold shadow-lg hover:shadow-green-500/50 transition-all duration-300 text-sm sm:text-base flex-1 sm:flex-none"
                   >
                     <span className="relative z-10 flex items-center justify-center">
-                      Start Free Trial
+                      Explore Courses
                       <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform hidden sm:inline-block" />
                     </span>
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="group relative overflow-hidden px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 text-sm sm:text-base flex-1 sm:flex-none"
+                  </Link>
+                  
+                  <a
+                    href="skype:live:.cid.xxxxx?chat"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 text-sm sm:text-base flex-1 sm:flex-none bg-blue-500 hover:bg-blue-600 text-white"
                   >
-                    <span className="relative z-10 flex items-center justify-center text-white">
-                      Explore Courses
+                    <span className="relative z-10 flex items-center justify-center">
+                      <FaSkype className="mr-2" />
+                      Skype Chat
                     </span>
-                    <div className="absolute inset-0 border-2 border-white rounded-xl" />
-                    <div className="absolute inset-[2px] rounded-xl bg-white/10 backdrop-blur-sm transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-                  </motion.button>
+                  </a>
                 </motion.div>
 
                 <motion.div
@@ -217,37 +330,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <section className="py-8 md:py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6"
-          >
-            {[
-              { number: "1000+", label: "Students", icon: <FaUserGraduate /> },
-              { number: "50+", label: "Teachers", icon: <FaQuran /> },
-              { number: "8+", label: "Courses", icon: <FaBookOpen /> },
-              { number: "24/7", label: "Support", icon: <FaClock /> },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-gray-50 rounded-lg p-3 md:p-4 text-center"
-              >
-                <div className="text-green-600 text-lg md:text-xl mb-1">{stat.icon}</div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900 leading-none mb-1">{stat.number}</h3>
-                <p className="text-xs md:text-sm text-gray-600">{stat.label}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       <section className="py-8 md:py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -544,58 +626,9 @@ const Home = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Norani Qaida",
-                description: "Perfect for beginners starting their Quranic journey",
-                image: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&auto=format&fit=crop&q=60",
-                category: "Beginner",
-                duration: "3 months",
-                icon: <FaBookOpen className="w-5 h-5" />
-              },
-              {
-                title: "Quran Nazra",
-                description: "Learn proper Quran recitation with tajweed rules",
-                image: "https://images.unsplash.com/photo-1585036156171-384164a8c675?w=800&auto=format&fit=crop&q=60",
-                category: "Intermediate",
-                duration: "6 months",
-                icon: <FaQuran className="w-5 h-5" />
-              },
-              {
-                title: "Quran Memorization",
-                description: "Memorize the Holy Quran with expert guidance",
-                image: "https://images.pexels.com/photos/16150271/pexels-photo-16150271/free-photo-of-making-the-most-of-ramadan-with-quran-reading.jpeg?auto=compress&cs=tinysrgb&w=600",
-                category: "Advanced",
-                duration: "Flexible",
-                icon: <FaBrain className="w-5 h-5" />
-              },
-              {
-                title: "Tafseer Studies",
-                description: "Understand the deep meaning of Quranic verses",
-                image: "https://images.pexels.com/photos/9127603/pexels-photo-9127603.jpeg?auto=compress&cs=tinysrgb&w=600",
-                category: "Advanced",
-                duration: "8 months",
-                icon: <FaBook className="w-5 h-5" />
-              },
-              {
-                title: "Islamic Fiqh",
-                description: "Learn Islamic jurisprudence and rulings",
-                image: "https://islamic-college.net/storage/media/85/conversions/5e4528ea39b70408459147-large.jpg",
-                category: "Intermediate",
-                duration: "6 months",
-                icon: <FaMosque className="w-5 h-5" />
-              },
-              {
-                title: "Arabic Language",
-                description: "Master the language of the Quran",
-                image: "https://cdn-jdnjn.nitrocdn.com/oNDOAVXcOvDcQZWDXmVLiHOMKUUVuHIH/assets/images/optimized/rev-9b865fa/www.whyislam.org/wp-content/uploads/2019/09/Closeup-of-a-page-in-the-Holy-Quran.jpg",
-                category: "All Levels",
-                duration: "12 months",
-                icon: <FaLanguage className="w-5 h-5" />
-              },
-            ].map((course, index) => (
+            {courses.slice(0, 6).map((course, index) => (
               <motion.div
-                key={index}
+                key={course.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -610,9 +643,12 @@ const Home = () => {
                     alt={course.title}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 z-20">
+                  <div className="absolute top-4 left-4 z-20 flex gap-2">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm text-white">
                       {course.category}
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
+                      {course.price}
                     </span>
                   </div>
                 </div>
@@ -636,16 +672,26 @@ const Home = () => {
                   </p>
 
                   <div className="flex items-center justify-between">
-                    <button className="text-green-600 font-medium text-sm group-hover:text-green-700 transition-colors duration-300 flex items-center gap-2">
+                    <Link 
+                      to={`/courses/${course.id}`}
+                      className="text-green-600 font-medium text-sm group-hover:text-green-700 transition-colors duration-300 flex items-center gap-2"
+                    >
                       Learn More
                       <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </button>
+                    </Link>
                     <div className="flex -space-x-2">
-                      {[...Array(3)].map((_, i) => (
+                      {getProfileImages(course.title).map((image, i) => (
                         <div
                           key={i}
-                          className="w-8 h-8 rounded-full border-2 border-white bg-gray-200"
-                        />
+                          className="w-8 h-8 rounded-full border-2 border-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-110"
+                        >
+                          <img 
+                            src={image} 
+                            alt={`${course.title} Teacher ${i + 1}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -661,7 +707,10 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center mt-12"
           >
-            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors duration-300">
+            <button 
+              onClick={handleViewAllCourses}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors duration-300"
+            >
               View All Courses
               <FaArrowRight className="w-4 h-4" />
             </button>
@@ -715,24 +764,19 @@ const Home = () => {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="group relative px-8 py-4 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold overflow-hidden">
-                      <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
-                      <span className="relative flex items-center justify-center gap-2">
-                        Schedule Free Trial
-                        <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                      </span>
-                    </button>
-
-                    <a href="tel:+923405052017" 
-                      className="group flex items-center gap-3 px-6 py-4 rounded-xl border-2 border-green-100 hover:border-green-200 bg-green-50/50 hover:bg-green-50 transition-all duration-300"
+                    <Link
+                      to="/courses"
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors duration-300"
                     >
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-green-100 group-hover:bg-green-200 text-green-600 transition-colors duration-300">
-                        <FaPhoneAlt className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600">Call Us Now</div>
-                        <div className="font-semibold text-gray-900">+92 340 5052017</div>
-                      </div>
+                      Explore Our Courses
+                      <FaArrowRight className="ml-2" />
+                    </Link>
+                    <a
+                      href="tel:+923405052017"
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-white text-green-600 font-medium border-2 border-green-600 hover:bg-green-50 transition-colors duration-300"
+                    >
+                      <FaPhone className="mr-2" />
+                      Call Us Now
                     </a>
                   </div>
 
@@ -741,7 +785,7 @@ const Home = () => {
                     <div className="grid grid-cols-3 gap-2 sm:gap-4">
                       {[
                         { 
-                          number: "1000+", 
+                          number: "10+", 
                           label: "Students",
                           icon: <FaUserGraduate className="w-4 h-4 sm:w-5 sm:h-5" />
                         },
@@ -752,7 +796,7 @@ const Home = () => {
                         },
                         { 
                           number: "100%", 
-                          label: "Success",
+                          label: "Satisfaction",
                           icon: <FaCheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                         },
                       ].map((stat, index) => (
@@ -813,6 +857,126 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Floating Contact Menu */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="relative">
+          {/* Main Contact Button with Toggle */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              setIsContactOpen(!isContactOpen);
+              setActivePopup(null);
+            }}
+            className="bg-white text-gray-700 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 relative"
+          >
+            <motion.div
+              initial={false}
+              animate={{ rotate: isContactOpen ? 45 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              {isContactOpen ? (
+                <FaTimes className="w-6 h-6 text-red-500" />
+              ) : (
+                <FaPhone className="w-6 h-6 text-green-500" />
+              )}
+            </motion.div>
+          </motion.button>
+
+          {/* Social Icons Circle Menu */}
+          <AnimatePresence>
+            {isContactOpen && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute bottom-20 right-0 flex flex-col-reverse gap-4"
+              >
+                {socialOptions.map((social, index) => (
+                  <motion.button
+                    key={social.id}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 50 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => {
+                      if (social.id === 'whatsapp') {
+                        setActivePopup('whatsapp');
+                      } else if (social.link) {
+                        window.open(social.link, '_blank');
+                      }
+                    }}
+                    className={`${social.color} ${social.shadowColor} p-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110`}
+                  >
+                    {social.icon}
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* WhatsApp Popup - Styling remains same but with updated colors */}
+          <AnimatePresence>
+            {activePopup === 'whatsapp' && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setActivePopup(null)}
+                  className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+                />
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                  className="absolute bottom-24 right-0 w-[320px] bg-white rounded-2xl shadow-xl z-50"
+                >
+                  <div className="p-4 bg-[#25D366] text-white rounded-t-2xl flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <FaWhatsapp className="w-6 h-6" />
+                      <div>
+                        <h3 className="font-semibold">WhatsApp Chat</h3>
+                        <p className="text-sm text-green-50">Usually replies instantly</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => setActivePopup(null)}
+                      className="p-1 hover:bg-white/20 rounded-full transition-colors"
+                    >
+                      <FaTimes className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="p-4">
+                    <p className="text-gray-600 mb-4">
+                      Hello! 👋 How can we help you today?
+                    </p>
+
+                    <div className="space-y-3">
+                      {socialOptions[0].options.map((option, index) => (
+                        <a
+                          key={index}
+                          href={`https://wa.me/${option.number}?text=${encodeURIComponent(option.initialMessage)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors group"
+                        >
+                          <span className="text-gray-700 font-medium">{option.text}</span>
+                          <FaArrowRight className="w-4 h-4 text-[#25D366] group-hover:translate-x-1 transition-transform" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
       {/* Modern Footer Section */}
       <footer className="relative bg-gradient-to-b from-gray-900 to-gray-950 text-gray-200 pt-20 pb-10">
         {/* Decorative Elements */}
@@ -861,7 +1025,7 @@ const Home = () => {
                 {["About", "Courses", "Teachers", "Contact"].map((link, index) => (
                   <li key={index}>
                     <a
-                      href="#"
+                      href={link === "About" ? "/about" : link === "Courses" ? "/courses" : link === "Teachers" ? "/teachers" : "/contact"}
                       className="text-gray-400 hover:text-green-400 text-sm transition-colors duration-300 flex items-center group"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-green-400 mr-2 transition-colors duration-300"></span>
@@ -872,21 +1036,30 @@ const Home = () => {
               </ul>
             </div>
 
-            {/* Courses */}
+            {/* Footer Courses Section */}
             <div className="lg:col-span-3">
               <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-4">
                 Our Courses
               </h4>
               <ul className="space-y-2">
-                {["Basic Qaida", "Quran Reading", "Tajweed", "Memorization", "Arabic"].map((course, index) => (
+                {[
+                  "Norani Qaida",
+                  "Quran Nazra",
+                  "Quran Memorization",
+                  "Tajweed Course",
+                  "Arabic Language",
+                  "Islamic Studies",
+                  "Prayer & Worship",
+                  "Advanced Quran Studies"
+                ].map((course, index) => (
                   <li key={index}>
-                    <a
-                      href="#"
+                    <Link
+                      to={`/courses/${index + 1}`}
                       className="text-gray-400 hover:text-green-400 text-sm transition-colors duration-300 flex items-center group"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover:bg-green-400 mr-2 transition-colors duration-300"></span>
                       {course}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -924,15 +1097,27 @@ const Home = () => {
               © {new Date().getFullYear()} Quran Academy. All rights reserved.
             </div>
             <div className="flex items-center space-x-6">
-              {["Privacy", "Terms", "Cookies"].map((item, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="text-sm text-gray-500 hover:text-green-400 transition-colors duration-300"
-                >
-                  {item}
-                </a>
-              ))}
+              <a
+                href="/privacy-policy"
+                onClick={() => window.location.reload()}
+                className="text-sm text-gray-500 hover:text-green-400 transition-colors duration-300"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/terms"
+                onClick={() => window.location.reload()}
+                className="text-sm text-gray-500 hover:text-green-400 transition-colors duration-300"
+              >
+                Terms
+              </a>
+              <a
+                href="/cookies"
+                onClick={() => window.location.reload()}
+                className="text-sm text-gray-500 hover:text-green-400 transition-colors duration-300"
+              >
+                Cookies
+              </a>
             </div>
           </div>
         </div>
