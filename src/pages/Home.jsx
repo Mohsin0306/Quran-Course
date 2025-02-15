@@ -102,7 +102,7 @@ const Home = () => {
       shadowColor: 'shadow-[#00AFF0]/20',
       textColor: 'text-[#00AFF0]',
       title: 'Skype Chat',
-      link: 'skype:live:.cid.xxxxx?chat'
+      link: 'https://join.skype.com/invite/p8b1rUwfCByC'
     },
     {
       id: 'facebook',
@@ -267,7 +267,7 @@ const Home = () => {
                   </Link>
                   
                   <a
-                    href="skype:live:.cid.xxxxx?chat"
+                    href="https://join.skype.com/invite/p8b1rUwfCByC"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-bold transition-all duration-300 text-sm sm:text-base flex-1 sm:flex-none bg-blue-500 hover:bg-blue-600 text-white"
