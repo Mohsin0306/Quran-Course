@@ -13,21 +13,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   const backgroundSlides = [
-    {
-      desktop: "https://e1.pxfuel.com/desktop-wallpaper/574/419/desktop-wallpaper-holy-quran-beautiful-holy-islamic-quran-islamic-tasbih.jpg",
-      mobile: "https://images.pexels.com/photos/7249294/pexels-photo-7249294.jpeg?auto=compress&cs=tinysrgb&w=600",
-      title: "Learn Quran Online",
-      subtitle: "Start your spiritual journey with expert guidance"
-    },
-    {
-      desktop: "https://i.pinimg.com/originals/d9/de/06/d9de06c16c1f81ce3557d22519e0810e.jpg",
-      mobile: "https://images.pexels.com/photos/8164567/pexels-photo-8164567.jpeg?auto=compress&cs=tinysrgb&w=600",
-      title: "Expert Islamic Teachers",
-      subtitle: "Learn from qualified scholars worldwide"
-    },
+    
     {
       desktop: "https://images.unsplash.com/photo-1585036156171-384164a8c675?q=80&w=2070&auto=format&fit=crop",
-      mobile: "https://images.unsplash.com/photo-1585036156171-384164a8c675?q=80&w=2070&auto=format&fit=crop&h=1200&w=800",
+      mobile: "https://images.pexels.com/photos/7249294/pexels-photo-7249294.jpeg?auto=compress&cs=tinysrgb&w=600",
       title: "Flexible Learning",
       subtitle: "Study at your own pace, anywhere, anytime"
     }
@@ -331,119 +320,113 @@ const Home = () => {
         </div>
       </div>
 
-      <section className="py-8 md:py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mb-8 md:mb-12"
+            className="text-center mb-12"
           >
-            <span className="text-green-600 text-sm md:text-base font-medium uppercase tracking-wider">Our Features</span>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2 mb-3">
-              Why Choose Our Academy?
+            <span className="text-green-600 text-sm font-medium uppercase tracking-wider">Our Programs</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">
+              Comprehensive Islamic Education
             </h2>
-            <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-              Experience the perfect blend of traditional Islamic education with modern teaching methods
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Choose from our wide range of carefully designed courses to begin your spiritual journey
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {[
-              {
-                icon: <FaQuran />,
-                title: "Expert Teachers",
-                description: "Learn from certified scholars",
-                features: [
-                  "Qualified Islamic scholars",
-                  "Native Arabic speakers",
-                  "Years of teaching experience",
-                  "Certified teaching methods"
-                ]
-              },
-              {
-                icon: <FaGlobe />,
-                title: "Flexible Learning",
-                description: "Study anytime, anywhere",
-                features: [
-                  "24/7 class scheduling",
-                  "Learn from any device",
-                  "Recorded sessions",
-                  "Flexible pace learning"
-                ]
-              },
-              {
-                icon: <FaBookOpen />,
-                title: "Personal Attention",
-                description: "One-on-one sessions",
-                features: [
-                  "Individual attention",
-                  "Personalized feedback",
-                  "Progress tracking",
-                  "Custom learning plans"
-                ]
-              },
-            ].map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {courses.slice(0, 6).map((course, index) => (
               <motion.div
-                key={index}
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
+                key={course.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-xl p-5 md:p-6 hover:shadow-lg transition-shadow duration-300"
+                className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600 text-xl">
-                    {feature.icon}
+                {/* Image Container */}
+                <div className="relative h-48 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
+                  <img 
+                    src={course.image} 
+                    alt={course.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 left-4 z-20 flex gap-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm text-white">
+                      {course.category}
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
+                      {course.price}
+                    </span>
                   </div>
-                  <div>
-                    <h3 className="text-lg md:text-xl font-bold text-gray-900">{feature.title}</h3>
-                    <p className="text-sm text-gray-500">{feature.description}</p>
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  {feature.features.map((item, i) => (
-                    <div key={i} className="flex items-center space-x-2">
-                      <svg 
-                        className="w-4 h-4 text-green-500 flex-shrink-0" 
-                        fill="none" 
-                        viewBox="0 0 24 24" 
-                        stroke="currentColor"
-                      >
-                        <path 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          strokeWidth={2} 
-                          d="M5 13l4 4L19 7" 
-                        />
-                      </svg>
-                      <span className="text-sm text-gray-600">{item}</span>
-                    </div>
-                  ))}
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <button className="text-green-600 text-sm font-medium hover:text-green-700 transition-colors duration-200 group flex items-center">
-                    Learn more 
-                    <svg 
-                      className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
+                {/* Content */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+                      {course.icon}
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      {course.duration}
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4">
+                    {course.description}
+                  </p>
+
+                  <div className="flex items-center justify-between">
+                    <Link 
+                      to={`/courses/${course.id}`}
+                      className="text-green-600 font-medium text-sm group-hover:text-green-700 transition-colors duration-300 flex items-center gap-2"
                     >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M9 5l7 7-7 7" 
-                      />
-                    </svg>
-                  </button>
+                      Learn More
+                      <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    </Link>
+                    <div className="flex -space-x-2">
+                      {getProfileImages(course.title).map((image, i) => (
+                        <div
+                          key={i}
+                          className="w-8 h-8 rounded-full border-2 border-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-110"
+                        >
+                          <img 
+                            src={image} 
+                            alt={`${course.title} Teacher ${i + 1}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* View All Courses Button */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-center mt-12"
+          >
+            <button 
+              onClick={handleViewAllCourses}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors duration-300"
+            >
+              View All Courses
+              <FaArrowRight className="w-4 h-4" />
+            </button>
+          </motion.div>
         </div>
       </section>
 
@@ -608,113 +591,119 @@ const Home = () => {
       </section>
 
       {/* Modern Courses Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-8 md:py-12 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 md:mb-12"
           >
-            <span className="text-green-600 text-sm font-medium uppercase tracking-wider">Our Programs</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-4">
-              Comprehensive Islamic Education
+            <span className="text-green-600 text-sm md:text-base font-medium uppercase tracking-wider">Our Features</span>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-2 mb-3">
+              Why Choose Our Academy?
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose from our wide range of carefully designed courses to begin your spiritual journey
+            <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+              Experience the perfect blend of traditional Islamic education with modern teaching methods
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.slice(0, 6).map((course, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            {[
+              {
+                icon: <FaQuran />,
+                title: "Expert Teachers",
+                description: "Learn from certified scholars",
+                features: [
+                  "Qualified Islamic scholars",
+                  "Native Arabic speakers",
+                  "Years of teaching experience",
+                  "Certified teaching methods"
+                ]
+              },
+              {
+                icon: <FaGlobe />,
+                title: "Flexible Learning",
+                description: "Study anytime, anywhere",
+                features: [
+                  "24/7 class scheduling",
+                  "Learn from any device",
+                  "Recorded sessions",
+                  "Flexible pace learning"
+                ]
+              },
+              {
+                icon: <FaBookOpen />,
+                title: "Personal Attention",
+                description: "One-on-one sessions",
+                features: [
+                  "Individual attention",
+                  "Personalized feedback",
+                  "Progress tracking",
+                  "Custom learning plans"
+                ]
+              },
+            ].map((feature, index) => (
               <motion.div
-                key={course.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                key={index}
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                className="bg-white rounded-xl p-5 md:p-6 hover:shadow-lg transition-shadow duration-300"
               >
-                {/* Image Container */}
-                <div className="relative h-48 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-                  <img 
-                    src={course.image} 
-                    alt={course.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 left-4 z-20 flex gap-2">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur-sm text-white">
-                      {course.category}
-                    </span>
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-500 text-white">
-                      {course.price}
-                    </span>
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-green-600 text-xl">
+                    {feature.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900">{feature.title}</h3>
+                    <p className="text-sm text-gray-500">{feature.description}</p>
                   </div>
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600">
-                      {course.icon}
+                
+                <div className="space-y-2">
+                  {feature.features.map((item, i) => (
+                    <div key={i} className="flex items-center space-x-2">
+                      <svg 
+                        className="w-4 h-4 text-green-500 flex-shrink-0" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M5 13l4 4L19 7" 
+                        />
+                      </svg>
+                      <span className="text-sm text-gray-600">{item}</span>
                     </div>
-                    <span className="text-sm text-gray-500">
-                      {course.duration}
-                    </span>
-                  </div>
+                  ))}
+                </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {course.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4">
-                    {course.description}
-                  </p>
-
-                  <div className="flex items-center justify-between">
-                    <Link 
-                      to={`/courses/${course.id}`}
-                      className="text-green-600 font-medium text-sm group-hover:text-green-700 transition-colors duration-300 flex items-center gap-2"
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <button className="text-green-600 text-sm font-medium hover:text-green-700 transition-colors duration-200 group flex items-center">
+                    Learn more 
+                    <svg 
+                      className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-200" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
                     >
-                      Learn More
-                      <FaArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </Link>
-                    <div className="flex -space-x-2">
-                      {getProfileImages(course.title).map((image, i) => (
-                        <div
-                          key={i}
-                          className="w-8 h-8 rounded-full border-2 border-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 hover:scale-110"
-                        >
-                          <img 
-                            src={image} 
-                            alt={`${course.title} Teacher ${i + 1}`}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                      <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M9 5l7 7-7 7" 
+                      />
+                    </svg>
+                  </button>
                 </div>
               </motion.div>
             ))}
           </div>
-
-          {/* View All Courses Button */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <button 
-              onClick={handleViewAllCourses}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors duration-300"
-            >
-              View All Courses
-              <FaArrowRight className="w-4 h-4" />
-            </button>
-          </motion.div>
         </div>
       </section>
 
